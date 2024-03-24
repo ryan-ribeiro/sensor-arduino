@@ -20,7 +20,7 @@ const char* password = "qwer@123";
 const char* serverName = "http://192.168.1.15:8080/presenca";
 
 // the following variables are unsigned longs because the time, measured in
-// milliseconds, will quickly become a bigger number than can be stored in an int.
+// milliseconds, will quickly become a bigger number that can't be stored in an int.
 unsigned long lastTime = 0;
 // Timer set to 10 minutes (600000)
 //unsigned long timerDelay = 600000;
@@ -47,7 +47,7 @@ void setup() {
 }
 
 void loop() {
-  //Send an HTTP POST request every 10 minutes
+  // Check if 5 seconds have passed since last event
   if ((millis() - lastTime) > timerDelay) {
     //Check WiFi connection status
     if(WiFi.status()== WL_CONNECTED){
@@ -99,7 +99,7 @@ String httpGETRequest(const char* serverName) {
   // If you need Node-RED/server authentication, insert user and password below
   //http.setAuthorization("REPLACE_WITH_SERVER_USERNAME", "REPLACE_WITH_SERVER_PASSWORD");
   
-  // Send HTTP POST request
+  // Send HTTP GET request
   int httpResponseCode = http.GET();
   
   String payload = "{}"; 
