@@ -17,7 +17,7 @@ const char* ssid = "Danilo";
 const char* password = "qwer@123";
 
 //Your Domain name with URL path or IP address with path
-const char* serverName = "http://192.168.1.15:8080/presenca";
+const char* serverName = "http://192.168.1.15:8080/evento";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
@@ -47,11 +47,10 @@ void setup() {
 }
 
 void loop() {
-  //Send an HTTP POST request every 10 minutes
   if ((millis() - lastTime) > timerDelay) {
     //Check WiFi connection status
     if(WiFi.status()== WL_CONNECTED){
-              
+      //Send an HTTP GET request every 5 seconds
       sensorReadings = httpGETRequest(serverName);
       Serial.println(sensorReadings);
       JSONVar myObject = JSON.parse(sensorReadings);
@@ -99,7 +98,7 @@ String httpGETRequest(const char* serverName) {
   // If you need Node-RED/server authentication, insert user and password below
   //http.setAuthorization("REPLACE_WITH_SERVER_USERNAME", "REPLACE_WITH_SERVER_PASSWORD");
   
-  // Send HTTP POST request
+  // Send HTTP GET request
   int httpResponseCode = http.GET();
   
   String payload = "{}"; 
